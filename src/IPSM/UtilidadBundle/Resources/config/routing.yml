@@ -1,0 +1,8 @@
+utilidades_homepage:
+    pattern:  /findpers
+    defaults: { _controller: UtilidadBundle:Default:index }
+
+
+utilidades_find:
+    pattern: /utilfind
+    defaults: { _controller: UtilidadBundle:Find:lista }

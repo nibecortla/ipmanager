@@ -1,0 +1,91 @@
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        <div class="collection" {{ block('widget_container_attributes') }}>
+            {{ form_errors(form ) }}
+
+            <table class="table ">
+                <thead>
+
+                {% for key, rows in form if key==0 %}
+                    <tr>
+                        {% for f, row in rows %}
+                            <th class="{{ form.vars.id ~ '-' ~ f }}">  {{ form_label(row) }} </th>
+                        {% endfor %}
+                        <th class="coleccion_accion">Acción</th>
+
+                    </tr>
+                {% endfor %}
+                </thead>
+                <tbody class="items">
+                {% for rows in form %}
+                    <tr>
+                        {% set fieldNum = 1 %}
+
+                        {% for row in rows %}
+                            <td>
+                                <div class="field{{ fieldNum }}">
+                                    {{ form_widget(row, {'attr': {'class': 'form-control' }}) }}
+                                </div>
+                                {% set fieldNum = fieldNum + 1 %}
+                            </td>
+                        {% endfor %}
+                        <td  style="text-align: center;">
+                            <button class="btn btn-mini btn-danger remove" data-coleccion-remove-btn="">
+                                <span class="glyphicon glyphicon-minus"></span></button>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ form_rest(form) }}
+
+            {#<div class="clear"></div>#}
+
+            <button class="btn btn-default add_item"  data-coleccion-add-btn="">
+                <span class="glyphicon glyphicon-plus"></span> Agregar
+            </button>
+
+
+        </div>
+
+        <div class="clear"></div>
+
+    {% endspaceless %}
+    {#{{ block('collection_js') }}#}
+{% endblock collection_widget %}
+
+
+{% block collection_item_widget %}
+    {% spaceless %}
+
+        <tr>
+            {% set fieldNum = 1 %}
+            {% for row in prototype %}
+                <td>
+                    <div class="field{{ fieldNum }}">
+                        {#{{ form_widget(row) }}#}
+                        {{ form_widget(row, {'attr': {'class': 'form-control' }}) }}
+                    </div>
+                </td>
+                {% set fieldNum = fieldNum + 1 %}
+            {% endfor %}
+            <td width="110px" style="text-align: center;">
+                <button class="btn btn-mini btn-danger remove" data-coleccion-remove-btn="">
+                    <span class="glyphicon glyphicon-minus"></span> </button>
+            </td>
+        </tr>
+
+    {% endspaceless %}
+
+{% endblock collection_item_widget %}
+
+{% block collection_js %}
+
+
+{% endblock collection_js %}
+
+

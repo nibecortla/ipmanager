@@ -1,0 +1,87 @@
+{% extends 'UtilidadBundle:Find:winmodal.html.twig' %}
+
+{% block title %} {{ titulo }} {% endblock %}
+
+ {% block page %}
+     <div>
+         <form class="frm_findtext">
+             Busqueda: <input type="text" id="find_txt" value="{{ textfind }}">
+             <button class="btn btn-success" type="submit">Buscar</button>
+         </form>
+     </div>
+     <hr>
+     <div id="resultadoBusqueda">
+         <table class="table table-bordered table-responsive table-highlight">
+             <thead>
+             {% for label in labels %}
+                 <th>{{ label }}</th>
+             {% endfor %}
+             </thead>
+             <tbody>
+             {% for obj in pager.currentPageResults %}
+                 <tr>
+                     {% for col in columns %}
+                         <td>{{ attribute( obj,col) }}</td>
+                     {% endfor %}
+                     <td>
+
+                         <button class="btn btn-default "
+                                 data-return="{%  include plantilla_return with {dato: obj, campos: columns, labels: labels} |raw("aaa") %}"
+                                 data-col_id="{{ attribute( obj,col_id) }}"
+                                 >Seleccionar
+                         </button>
+                     </td>
+                 </tr>
+             {% else %}
+                 <div class="alert alert-danger">No hay datos encontrado para la consulta de <span
+                             class="label label-danger"> {{ textfind }} </span></div>
+
+             {% endfor %}
+             </tbody>
+         </table>
+
+         {{ pagerfanta(pager,'twitter_bootstrap3') }}
+     </div>
+
+     <script>
+         /**
+          * Para capturar los eventos click del paginador y tranformarlos en llamadas ajax
+          */
+         $(document).off("click", ".pagination li a");
+         $(document).on("click", ".pagination li a", function (e) {
+             e.preventDefault();
+             var href = $(this).attr("href");
+             if (!$(this).parent().hasClass('disabled')) {
+                 console.log("pager click");
+                 $(".modal-body").slideUp();
+                 loadTo(".modal-body", href + "  .modal-body");
+             }
+         });
+
+         loadTo = function (intoElement, href) {
+             $(intoElement).load(href, function () {
+                 $(intoElement).slideDown();
+             });
+         }
+
+         $(document).off("submit", "form.frm_findtext");
+         $(document).on("submit", "form.frm_findtext", function (e) {
+             e.preventDefault();
+             var href = "{{ urlFind }}";
+             var textfind =  encodeURIComponent($("#find_txt").val());
+
+             href = href + "?txtfind=" + textfind ;
+             href = href + "&form_type={{ claseType }}";
+             href = href + "&form_colname={{ form_colname }}";
+
+             if (!$(this).parent().hasClass('disabled')) {
+                 console.log("find click");
+                 $(".modal-body").slideUp();
+                 loadTo(".modal-body", href + "  .modal-body");
+             }
+
+         });
+
+
+     </script>
+ {% endblock page %}

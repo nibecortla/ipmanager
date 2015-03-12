@@ -1,0 +1,59 @@
+    {% extends '::layout.html.twig' %}
+
+    {% block contenido -%}
+    {% embed '::portlet.html.twig' with {'titulo': 'Ver Persona: ' ~ entity} %}
+            {% block cuerpo %} 
+         <p></p>
+
+
+
+        <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                            <td>{{ entity.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre</th>
+                            <td>{{ entity.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <th>Correo</th>
+                            <td>{{ entity.correo }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telefono</th>
+                            <td>{{ entity.telefono }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+                <div class="row">
+                <div class="col-md-1 col-md-offset-8 ">
+        <div class="pull-right">
+            {{ form(delete_form) }}
+        </div>
+    </div>
+    <div class="col-md-1 ">
+        <div class="pull-left">
+            <a href="{{ path('persona_edit', { 'id': entity.id }) }}"
+               class="btn btn-sm btn-default">
+                Editar
+            </a>
+
+        </div>
+    </div>
+
+
+
+<div class="col-md-1  ">
+    <a href="{{ path('persona') }}" class="btn btn-sm btn-default">
+        Ir a la lista
+    </a>
+</div>
+
+        </div>
+
+    {% endblock %} 
+    {% endembed %} 
+    {% endblock contenido %}

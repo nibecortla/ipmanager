@@ -1,0 +1,96 @@
+{% block extends %}
+{{ "{% extends 'LarABMGeneradorBundle::layout.html.twig' %}" }}
+{% endblock extends %}
+
+{{ "{% block id '" ~  entity ~"' %} "}}
+
+{% block body %}
+{{ "{% block contenido -%}" }}
+{{ "{% embed '::portlet.html.twig' with {'titulo': 'Lista de " ~ entity ~ " <small>(' ~ pager.totalItemCount ~ ' )</small>' } %}  " }}
+{{ "    {% block in_header %} "}}
+            <div class='pull-right'>
+                <a class='btn bg-success btn-xs dropdown-toggle' data-toggle='modal' data-target='#filters'>
+                    Filtro
+                    <span class='caret'></span>
+                </a>
+            </div>
+{{ "    {% endblock %}" }}
+
+{{ "    {% block cuerpo %} " }}
+{{ "        {% for type, flashMessages in app.session.flashbag.all() %} " }}
+{{ "            {% for flashMessage in flashMessages %} " }}
+{{ "                <div class='alert alert-{{ type }}'> " }}
+{{ "                    {{ flashMessage }} " }}
+{{ "                </div> " }}
+{{ "            {% endfor %} " }}
+{{ "        {% endfor %}" }}
+
+            <form method='post' action='.' class='form-horizontal'>
+{{ "            {% embed 'modal.html.twig' with { 'modal_id': 'filters', 'modal_titulo': 'Filtro de "~ entity ~"s'} %} " }}
+{{ "                {% block modal_contenido %} " }}
+{{ "                    {{ form_rest(filterform) }} " }}
+{{ "                {% endblock %} " }}
+
+{{ "                {% block modal_botones %} " }}
+                        <input type='submit' class='btn btn-primary' name='submit-filter' value='Aplicar'/>
+{{ "                {% endblock modal_botones %} " }}
+{{ "            {% endembed %} " }}
+            </form>
+
+            <p></p>
+
+            <table class="table table-striped table-bordered  table-responsive">
+                <thead>
+                    <tr>{{ '\n' }}
+                        {%- for field, metadata in fields %}
+                        <th class="{{ "{{ pager.isSorted('"~  field ~ "') ? 'headerSortDown glyphicon-sort-by-attributes': 'headerSortUp' }}" }}">{{ field|capitalize }}</th>{{ '\n' }}
+                        {%- endfor %}
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ '{% for entity in pager %}' }}
+                    <tr>{{ '\n' }}
+                    {%- for field, metadata in fields %}
+                        {%- if loop.first and ('show' in actions) %}
+                        <td><a href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { 'id': entity.id }) }}" }}">{{ '{{ entity.' ~ field|replace({'_': ''}) ~ ' }}' }}</a></td>{{ '\n' }}
+                       {%- elseif metadata.type in ['date', 'datetime'] %}
+                        <td>{{ '{% if entity.' ~ field|replace({'_': ''}) ~ ' %}{{ entity.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>{{ '\n' }}
+                       {%- else %}
+                        <td>{{ '{{ entity.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>{{ '\n' }}
+                       {%- endif %}
+
+                        {%- if loop.last %}
+                        <td style="width: 100px;">
+                            {%- include "crud/views/others/actions.html.twig" %}
+                        </td>{{ '\n' }}
+                        {%- endif %}
+                    {%- endfor %}
+                    </tr>
+                    {{ '{% endfor %}' }}
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-lg-10">
+                    {{ '{{ knp_pagination_render(pager) }}' }}
+                </div>
+{% if 'new' in actions %}
+                <div class="col-lg-2">
+                    <a href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}" class="larCrud_nuevo btn btn-sm btn-primary">
+                        Nuevo {{ entity }}
+                    </a>
+                </div>
+{% endif %}
+            </div>
+
+{{"     {% endblock %} "}}
+{{" {% endembed %} "}}
+
+{{ '
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("bundles/larabmgenerador/css/laradmin.css") }}">
+{% endblock %}
+' }}
+{{ "{% endblock contenido %}" }}
+{% endblock body %}

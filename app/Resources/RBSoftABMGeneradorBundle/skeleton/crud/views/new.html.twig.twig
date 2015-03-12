@@ -1,0 +1,33 @@
+
+{% block extends %}
+    {{ "{% extends 'LarABMGeneradorBundle::layout.html.twig' %}" }}
+{% endblock extends %}
+    {{ "{% block id '" ~entity~ "' %} "}}
+    {% block body %}
+        {{ "{% block contenido -%}" }}
+        {{ "{% embed '::portlet.html.twig' with {'titulo': 'Nuevo " ~  entity  ~ "' } %}" }}
+        {{ "        {% block cuerpo %} " }}
+        <p>{#menseje acorde#}</p>
+        {{ '
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <div class="col-sm-offset-2">
+                    <input type="submit" value="Guardar" class="btn btn-success">
+                </div>
+
+            {{ form_end(form) }}
+        ' }}
+
+        {% set hide_edit, hide_delete = true, true %}
+
+        <div class="row">
+            {% include 'crud/views/others/record_actions.html.twig' %}
+        </div>
+
+        {{ "{% endblock %} "}}
+        {{ "{% endembed %} "}}
+
+
+
+        {{ "{% endblock contenido %}" }}
+    {% endblock body %}

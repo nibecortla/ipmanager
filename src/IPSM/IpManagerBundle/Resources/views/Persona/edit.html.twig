@@ -1,0 +1,39 @@
+    {% extends '::layout.html.twig' %}
+    {% block id 'Persona' %} 
+            {% block contenido -%}
+        {% embed '::portlet.html.twig' with {'titulo': 'Editar Persona: ' ~ entity} %}
+                {% block cuerpo %} 
+        <p></p>
+        
+            {{ form_start(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <div class="col-sm-offset-2">
+                    <input type="submit" value="Guardar" class="btn btn-success">
+                </div>
+
+            {{ form_end(edit_form) }}
+        
+
+        
+                <div class="row">
+                    
+    <div class="col-md-2 col-md-offset-8 ">
+        <div class="pull-right">
+            {{ form(delete_form) }}
+        </div>
+    </div>
+
+
+<div class="col-md-1  ">
+    <a href="{{ path('persona') }}" class="btn btn-sm btn-default">
+        Ir a la lista
+    </a>
+</div>
+
+                </div>
+
+        {% endblock %} 
+    {% endembed %} 
+
+
+    {% endblock contenido %}

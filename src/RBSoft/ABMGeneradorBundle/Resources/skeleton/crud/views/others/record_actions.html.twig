@@ -1,0 +1,42 @@
+{% if ('delete' in actions) and ('edit' in actions) and (not hide_delete) and ( not hide_edit) %}
+    <div class="col-md-1 col-md-offset-8 ">
+        <div class="pull-right">
+            {{ '{{ form(delete_form) }}' }}
+        </div>
+    </div>
+    <div class="col-md-1 ">
+        <div class="pull-left">
+            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': entity.id }) }}" }}"
+               class="btn btn-sm btn-default">
+                Editar
+            </a>
+
+        </div>
+    </div>
+{% endif %}
+
+{% if ('delete' in actions) and (not hide_delete) and ( hide_edit) %}
+    <div class="col-md-2 col-md-offset-8 ">
+        <div class="pull-right">
+            {{ '{{ form(delete_form) }}' }}
+        </div>
+    </div>
+{% endif %}
+
+{% if ('edit' in actions) and (not hide_edit) and hide_delete %}
+    <div class="col-md-2 col-md-offset-8 ">
+        <div class="pull-right">
+            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': entity.id }) }}" }}"
+               class="btn btn-sm btn-default">
+                Editar
+            </a>
+        </div>
+    </div>
+{% endif %}
+
+<div class="col-md-1 {{ hide_edit and hide_delete ? 'col-md-offset-10' :''  }} ">
+    <a href="{{ "{{ path('" ~ route_name_prefix ~ "') }}" }}" class="btn btn-sm btn-default">
+        Ir a la lista
+    </a>
+</div>
+

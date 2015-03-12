@@ -1,0 +1,78 @@
+{% block find_widget %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-xs-3">
+                {{ block('form_widget_simple') }}
+            </div>
+
+            <div class="col-xs-1" style="display: inline-block">
+                <a id="btn_{{ id }}" href="{{ path('utilidades_find') }}" class="btn"><img src="{{ asset(btn_find_img) }}" style="height: 18px;"> </a>
+            </div>
+            <div id="show_find_{{ id }}" class="col-xs-8" style="display: inline-block">{{ show_inicio | raw }}</div>
+        </div>
+
+        <script>
+            var idClk;
+            $(function () {
+                $("#btn_{{ id }}").on('click', function (e) {
+                            e.preventDefault();
+                            var href = $(this).attr("href");
+                            //console.log("find ");
+                            idClk = '{{ id }}';
+                            $("#winModal").html("");
+
+                            $("#winModal").load(
+                                    href,
+                                    {
+                                        form_type: '{{ form_type }}',
+                                        form_colname: '{{ form_colname }}',
+                                        txtfind: $("#{{ id }}").val(),
+                                        vars: '{{ vars }}'
+                                    },
+                                    function (response, status, xhr) {
+
+                                        if (xhr.status == 409) {
+                                            new PNotify({
+                                                title: 'Búsqueda                 ',
+                                                text: response,
+                                                type: 'error',
+                                                styling: 'bootstrap3'
+                                            });
+
+                                        } else {
+                                            if (xhr.status == 302) {
+                                                datos = $.parseJSON(response);
+                                                $("#show_find_{{ id }}").html(datos.html_ret);
+                                                $("#{{ id }}").val(datos.id);
+
+
+                                            } else {
+                                                $("#winModal").modal({
+                                                    keyboard: false,
+                                                    backdrop: 'static'
+                                                });
+                                            }
+                                        }
+                                    }
+                            );
+                        }
+                );
+
+                $("body").on('click', '[data-return]', function () {
+                    if (idClk == '{{ id }}') {
+
+                        $("#show_find_{{ id }}").html($(this).data("return"));
+                        $("#{{ id }}").val($(this).data("col_id"));
+                        $("#winModal").modal('hide');
+                    }
+                });
+
+            });
+
+        </script>
+
+
+
+    {% endspaceless %}
+{% endblock find_widget %}
+

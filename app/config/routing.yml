@@ -1,0 +1,5 @@
+ip_manager:
+    resource: "@IpManagerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

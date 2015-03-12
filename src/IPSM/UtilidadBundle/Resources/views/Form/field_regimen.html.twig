@@ -1,0 +1,15 @@
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group{% if errors|length > 0 %} has-error{% endif %}">
+            {{ form_label(form, '', { 'label_attr': {'class': 'col-sm-4 control-label'} }) }}
+            <div class="col-sm-8">
+                {{ form_widget(form,{ 'attr': {'class': form_control_class } }) }}
+                {{ form_errors(form) }}
+                {% if form.vars.help is defined %}
+                    <span class="help-block">{{ form.vars.help }}</span>
+                {% endif %}
+
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}

@@ -1,0 +1,96 @@
+{% block extends %}
+    {{ "{% extends 'LarABMGeneradorBundle::layout.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+    {{ "{% block contenido -%}" }}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            {{ entity }} - Lista
+            <small>( {{ '{{ pager.getNbResults }}' }} )</small>
+
+        </div>
+
+        <div class="panel-body">
+            <p>
+
+            </p>
+            {{ '{% for type, flashMessages in app.session.flashbag.all() %} ' }}
+            {{ '{% for flashMessage in flashMessages %} ' }}
+            {{ '    <div class="alert alert-{{ type }}"> ' }}
+            {{ '        {{ flashMessage }} ' }}
+            {{ '    </div>' }}
+            {{ '{% endfor %} ' }}
+            {{ '{% endfor %}' }}
+        </div>
+        <table class="table table-striped table-bordered  table-responsive">
+            <thead>
+            <tr>
+                {%- for field, metadata in fields %}
+
+                    <th>{{ field|capitalize }}</th>
+
+                {%- endfor %}
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{ '{% for entity in pager.currentPageResults %}' }}
+            <tr>
+
+                {%- for field, metadata in fields %}
+                    {%- if loop.first and ('show' in actions) %}
+
+                        <td>
+                            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { 'id': entity.id }) }}" }}">{{ '{{ entity.' ~ field|replace({'_': ''}) ~ ' }}' }}</a>
+                        </td>
+
+                    {%- elseif metadata.type in ['date', 'datetime'] %}
+
+                        <td>{{ '{% if entity.' ~ field|replace({'_': ''}) ~ ' %}{{ entity.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>
+
+                    {%- else %}
+
+                        <td>{{ '{{ entity.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+
+                    {%- endif %}
+
+                    {%- if loop.last %}
+
+                        <td style="width: 100px;">
+                            {%- include "crud/views/others/actions.html.twig" %}
+                        </td>
+
+                    {%- endif %}
+                {%- endfor %}
+
+            </tr>
+            {{ '{% endfor %}' }}
+            </tbody>
+        </table>
+
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-lg-10">
+                    {{ '{{ pagerfanta(pager, \'twitter_bootstrap3\') }}' }}
+                </div>
+
+                {% if 'new' in actions %}
+                    <div class="col-lg-2">
+                        <a href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}"
+                           class="larCrud_nuevo btn btn-sm btn-primary">
+                            Nuevo {{ entity }}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {{ '
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset("bundles/larabmgenerador/css/laradmin.css") }}">
+    {% endblock %}
+    ' }}
+    {{ "{% endblock contenido %}" }}
+{% endblock body %}

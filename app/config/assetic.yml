@@ -1,0 +1,162 @@
+# Assetic Configuration
+
+assetic:
+    debug: %kernel.debug%
+    use_controller: true
+    bundles: [ UtilidadesBundle ]
+    java: %java_path%
+    filters:
+        cssrewrite: ~
+        yui_css:
+            jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.6.jar
+        yui_js:
+            jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.6.jar
+        lessphp: ~
+    assets:
+        lesses:
+            inputs:
+#                - %kernel.root_dir%/../web/assets/bootstrap-2.3.2/less/bootstrap.less
+#                - @BricksSiteBundle/Resources/less/*.less
+#                - @BricksWikiBundle/Resources/less/*.less
+#                - @BricksUserBundle/Resources/less/*.less
+#                - @BricksMessageBundle/Resources/less/*.less
+            filters: lessphp
+        stylesheets:
+            inputs:
+                #-- Font Awesome CSS --#
+                - %kernel.root_dir%/../web/assets/css/font-awesome.min.css
+                #-- Bootstrap CSS --#
+                - %kernel.root_dir%/../web/assets/css/bootstrap.min.css
+                #-- App CSS --#>
+                - %kernel.root_dir%/../web/assets/css/mvpready-admin.css
+                - %kernel.root_dir%/../web/assets/css/mvpready-flat.css
+
+
+
+#                - %kernel.root_dir%/../web/assets/css/jquery-ui.css
+#
+
+#
+#
+#                - %kernel.root_dir%/../web/assets/css/openweb/openwebicons-bootstrap.css
+#
+#                - %kernel.root_dir%/../web/assets/css/uniform.default.css
+#                - %kernel.root_dir%/../web/assets/css/jquery.gritter.css
+#                - %kernel.root_dir%/../web/assets/css/jquery-jvectormap.css
+#                - %kernel.root_dir%/../web/assets/css/simplePagination.css
+#
+#                - %kernel.root_dir%/../web/assets/css/datepicker.css
+#
+#                - %kernel.root_dir%/../web/assets/css/fullcalendar/fullcalendar.css
+#
+#                - %kernel.root_dir%/../web/assets/css/general/colors.css
+#
+#                - %kernel.root_dir%/../web/assets/css/general/base.css
+#                - %kernel.root_dir%/../web/assets/css/general/layout.css
+#                - %kernel.root_dir%/../web/assets/css/general/overrides.css
+#
+#
+#
+#                - %kernel.root_dir%/../web/assets/css/ui/boxes.css
+#                - %kernel.root_dir%/../web/assets/css/ui/sidebar.css
+#                - %kernel.root_dir%/../web/assets/css/ui/breadcrumbs.css
+#                - %kernel.root_dir%/../web/assets/css/ui/footer.css
+#
+#
+#                - %kernel.root_dir%/../web/assets/css/chosen/chosen.css
+#                - %kernel.root_dir%/../web/assets/css/chosen/chosen_fix.css
+#
+#                - %kernel.root_dir%/../web/assets/css/dataTables/jquery.dataTables.bootstrap.css
+#
+#                - %kernel.root_dir%/../web/assets/css/components/buttons.css
+#                - %kernel.root_dir%/../web/assets/css/components/forms.css
+#                - %kernel.root_dir%/../web/assets/css/components/progress.css
+#                - %kernel.root_dir%/../web/assets/css/components/tabbable.css
+#                - %kernel.root_dir%/../web/assets/css/components/tags.css
+#                - %kernel.root_dir%/../web/assets/css/components/modals.css
+#                - %kernel.root_dir%/../web/assets/css/components/gauges.css
+#                - %kernel.root_dir%/../web/assets/css/components/sliders.css
+#                - %kernel.root_dir%/../web/assets/css/components/charts.css
+#                - %kernel.root_dir%/../web/assets/css/components/tables.css
+#                - %kernel.root_dir%/../web/assets/css/components/datepicker.css
+#                - %kernel.root_dir%/../web/assets/css/components/alerts.css
+#                - %kernel.root_dir%/../web/assets/css/components/knobs.css
+#                - %kernel.root_dir%/../web/assets/css/components/extras.css
+#                - %kernel.root_dir%/../web/assets/css/components/reports.css
+#                - %kernel.root_dir%/../web/assets/css/components/widgets.css
+#                - %kernel.root_dir%/../web/assets/css/components/big-labels.css
+#                - %kernel.root_dir%/../web/assets/css/components/sample_pages.css
+#
+#                - %kernel.root_dir%/../web/assets/css/extensions/bootstrap-modal.css
+#                - %kernel.root_dir%/../web/assets/css/extensions/bootstrap-image-gallery.css
+
+
+                #- %kernel.root_dir%/../web/assets/css/main.css
+                - bundles/jordillonchcrudgenerator/css/crud.css
+
+                - bundles/utilidades/css/main.css
+                - bundles/utilidades/css/componentes.css
+
+                - @lesses
+#                - %kernel.root_dir%/../web/assets/FortAwesome-Font-Awesome-3.0/css/font-awesome.min.css
+            filters:
+                - cssrewrite
+                - ?yui_css
+        javascripts_header:
+            inputs:
+#                - %kernel.root_dir%/../web/assets/js/jquery-ui.js
+#                - %kernel.root_dir%/../web/assets/js/angular.js
+#                - %kernel.root_dir%/../web/assets/js/angular-resource.js
+#                - bundles/fosjsrouting/js/router.js
+            filters:
+                - cssrewrite
+                - ?yui_js
+        javascripts_footer:
+            inputs:
+                #-- Bootstrap core JavaScript
+                #-- Core JS --#
+                - %kernel.root_dir%/../web/assets/js/libs/jquery-1.10.2.min.js
+                - %kernel.root_dir%/../web/assets/js/libs/bootstrap.min.js
+
+                #    <!--[if lt IE 9]>
+                    #<script src="./js/libs/excanvas.compiled.js"></script>
+                #<![endif]-->
+
+#                <!-- Plugin JS -->
+                - %kernel.root_dir%/../web/assets/js/libs/bootstrap.min.js
+#                <script src="./js/plugins/flot/jquery.flot.js"></script>
+#                <script src="./js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+#                <script src="./js/plugins/flot/jquery.flot.pie.js"></script>
+#                <script src="./js/plugins/flot/jquery.flot.resize.js"></script>
+
+#                <!-- App JS -->
+#                <script src="./js/mvpready-core.js"></script>
+#                <script src="./js/mvpready-admin.js"></script>
+
+#                <!-- Plugin JS -->
+#                <script src="./js/demos/flot/line.js"></script>
+#                <script src="./js/demos/flot/pie.js"></script>
+#                <script src="./js/demos/flot/auto.js"></script>
+
+
+                - bundles/utilidades/js/main.angular.js
+                - bundles/utilidades/js/comp*.js
+#
+#                - %kernel.root_dir%/../web/assets/js/bootstrap.js
+#                - %kernel.root_dir%/../web/assets/js/chosen.jquery.js
+#                - %kernel.root_dir%/../web/assets/js/jquery.uniform.js
+#                - %kernel.root_dir%/../web/assets/js/jquery.knob.js
+#                - %kernel.root_dir%/../web/assets/js/jquery.piety.js
+#
+#                - %kernel.root_dir%/../web/assets/js/jquery.gritter.js
+#                - %kernel.root_dir%/../web/assets/js/notifications.js
+#
+#                - %kernel.root_dir%/../web/assets/js/load-image.js
+#
+
+
+
+
+            filters:
+                - cssrewrite
+                - ?yui_js

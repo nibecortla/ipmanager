@@ -1,0 +1,10 @@
+{% spaceless %}
+    <div>
+        {%  for col in campos %}
+            <div class='{{ loop.first ? 'find_ppal' : 'find_'~loop.index }}'  >
+                <label style='display: inline-block; width: 85px;'>{{ labels[loop.index0] }}: </label>
+                {{ attribute( dato,col) }}
+            </div>
+        {% endfor %}
+    </div>
+{% endspaceless %}

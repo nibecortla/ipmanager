@@ -1,0 +1,37 @@
+
+    {% extends '::layout.html.twig' %}
+    {% block id 'Persona' %} 
+            {% block contenido -%}
+        {% embed '::portlet.html.twig' with {'titulo': 'Nuevo Persona' } %}
+                {% block cuerpo %} 
+        <p></p>
+        
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <div class="col-sm-offset-2">
+                    <input type="submit" value="Guardar" class="btn btn-success">
+                </div>
+
+            {{ form_end(form) }}
+        
+
+        
+        <div class="row">
+            
+
+
+<div class="col-md-1 col-md-offset-10 ">
+    <a href="{{ path('persona') }}" class="btn btn-sm btn-default">
+        Ir a la lista
+    </a>
+</div>
+
+        </div>
+
+        {% endblock %} 
+        {% endembed %} 
+
+
+
+        {% endblock contenido %}
+    

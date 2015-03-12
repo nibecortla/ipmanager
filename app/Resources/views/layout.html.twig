@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+<div class="content">
+    <div class="container">
+        {% block container %}
+        <div class="row">
+            <div class="col-md-12">
+                {% block workarea %}{% endblock %}
+                {% block contenido %}{% endblock %}
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        {% endblock container %}
+    </div><!-- /.container -->
+</div><!-- .content -->
+
+
+
+
+{% endblock body %}
+{#{% include 'includes/topbar.html.twig' %}#}
+
+
+{#{% block stylesheets %}{% endblock stylesheets %}#}
+{#{% block javascripts %}{% endblock javascripts %}#}
